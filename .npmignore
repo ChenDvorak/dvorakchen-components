@@ -1,0 +1,9 @@
+/cypress
+/node_modules
+/src
+.gitignore
+cypress.config.ts
+tailwind.config.js
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
