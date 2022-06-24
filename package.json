@@ -1,11 +1,28 @@
 {
   "name": "dvorakchen-components",
-  "version": "0.0.10",
+  "version": "0.1.10",
   "files": [
     "dist"
   ],
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
+  "description": "some react components I made",
+  "author": "dvorakchen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChenDvorak/dvorakchen-components.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChenDvorak/dvorakchen-components/issues"
+  },
+  "homepage": "https://github.com/ChenDvorak/dvorakchen-components#readme",
+  "keywords": [
+    "react",
+    "styles",
+    "css",
+    "components"
+  ],
   "scripts": {
     "dev": "run-p dev:*",
     "dev:css": "npm run generate:css -- --watch",

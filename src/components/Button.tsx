@@ -1,21 +1,23 @@
-import { forwardRef, ForwardedRef } from "react";
+import { forwardRef, ForwardedRef, ButtonHTMLAttributes } from "react";
+import { getThemeColor, ThemeAttributes } from "~/theme";
 
 const Button = forwardRef(function (
-  props: any,
+  props: ButtonHTMLAttributes<HTMLButtonElement> & ThemeAttributes,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
-  let { role, children, ...rest } = props;
+  let { role, children, primary, secondary, ...rest } = props;
+
+  const themeColor = getThemeColor({ primary, secondary });
+
   role ??= "button";
   return (
     <button
       {...rest}
       role={role}
       ref={ref}
-      // role="button"
-      className="px-4 py-0.5 mx-2 my-1 bg-purple-500 rounded-full
-      text-white
-      hover:bg-purple-400 hover:ring-offset-2 hover:ring-purple-400
-      focus:ring focus:ring-offset-2 focus:ring-purple-500"
+      className={`px-4 py-0.5 mx-1 my-1 rounded-full ${themeColor}
+      hover:ring-offset-2
+      focus:ring focus:ring-offset-2`}
     >
       {children}
     </button>

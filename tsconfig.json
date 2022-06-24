@@ -17,7 +17,9 @@
     "jsx": "react-jsx",
     "declaration": true,
     "paths": {
-      "~/*": ["./src/"]
+      "~/*": ["./src/"],
+      "~/theme": ["./src/theme"],
+      "~/types": ["./src/types"]
     },
     "types": ["cypress", "@testing-library/cypress"]
   },
