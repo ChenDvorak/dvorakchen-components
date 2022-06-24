@@ -49,14 +49,21 @@ type Themestrategy = {
 export type ThemeAttributes = {
   primary?: boolean;
   secondary?: boolean;
+  general?: boolean;
 };
 
-export function getThemeColor(themeAttribute: ThemeAttributes): ColorStrategy {
+export function selectThemeColor(
+  themeAttribute: ThemeAttributes
+): ColorStrategy {
   if (themeAttribute.primary) {
-    return theme.primary;
+    return getThemeColor("primary");
   }
   if (themeAttribute.secondary) {
-    return theme.secondary;
+    return getThemeColor("secondary");
   }
-  return theme.general;
+  return getThemeColor("general");
+}
+
+export function getThemeColor(themeAttributeKey: keyof ThemeAttributes) {
+  return theme[themeAttributeKey];
 }

@@ -14,8 +14,33 @@ describe("Input.cy.tsx", () => {
   });
 
   it("type input", () => {
-    const EXPECTED_VALUE = "Input Value";
+    const EXPECTED_VALUE = "Input Value 输入";
     cy.mount(<Input value={EXPECTED_VALUE} />);
     cy.get("input").should("contain.value", EXPECTED_VALUE);
   });
+
+  it("type input placeholder", () => {
+    const PLACEHOLDER_VALUE = "占位符 placeholder";
+    cy.mount(<Input placeholder={PLACEHOLDER_VALUE} />);
+    cy.findByPlaceholderText(PLACEHOLDER_VALUE).should("exist");
+  });
+
+  it("has name attribute", () => {
+    cy.mount(<Input name="inputName" />);
+    cy.get("input").should("have.attr", "name");
+  });
+
+  it("input with label", () => {
+    const LABEL = "账号";
+    const ID = "account";
+    cy.mount(<Input label={LABEL} id={ID} />);
+    cy.findByLabelText(LABEL).should("exist").should("have.id", ID);
+  });
+
+  // it("change input value", () => {
+  //   const onChangeSpy = cy.spy().as("onChangeSpy");
+  //   cy.mount(<Input onChange={onChangeSpy} />);
+  //   cy.get('input')
+  //   fireEvent.change
+  // });
 });

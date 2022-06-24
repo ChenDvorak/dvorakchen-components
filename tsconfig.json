@@ -19,7 +19,7 @@
     "paths": {
       "~/*": ["./src/"],
       "~/theme": ["./src/theme"],
-      "~/types": ["./src/types"]
+      "~/icons": ["./src/icons"]
     },
     "types": ["cypress", "@testing-library/cypress"]
   },

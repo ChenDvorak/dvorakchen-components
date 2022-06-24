@@ -14,6 +14,7 @@ describe("Button.cy.tsx", () => {
     const GENERAL_TEXT = "普通按钮";
     cy.mount(
       <>
+        <Button disabled>{PRIMARY_TEXT}</Button>
         <Button primary>{PRIMARY_TEXT}</Button>
         <Button secondary>{SECONDARY_TEXT}</Button>
         <Button>{GENERAL_TEXT}</Button>
