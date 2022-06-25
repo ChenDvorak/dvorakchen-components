@@ -33,14 +33,17 @@ describe("Input.cy.tsx", () => {
   it("input with label", () => {
     const LABEL = "账号";
     const ID = "account";
-    cy.mount(<Input label={LABEL} id={ID} />);
+    cy.mount(<Input label={LABEL} id={ID} placeholder="请输入账号" />);
     cy.findByLabelText(LABEL).should("exist").should("have.id", ID);
   });
 
-  // it("change input value", () => {
-  //   const onChangeSpy = cy.spy().as("onChangeSpy");
-  //   cy.mount(<Input onChange={onChangeSpy} />);
-  //   cy.get('input')
-  //   fireEvent.change
-  // });
+  it("change input value", async () => {
+    const TYPE_STRING = "输入了什么？";
+    const onChangeSpy = cy.spy().as("onChangeSpy");
+    cy.mount(<Input onChange={onChangeSpy} />);
+
+    cy.get("input").click().type(TYPE_STRING);
+    cy.findByText(TYPE_STRING).should("exist");
+    cy.get("@onChangeSpy").should("have.been.called.with", TYPE_STRING);
+  });
 });
