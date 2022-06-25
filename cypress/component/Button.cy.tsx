@@ -21,4 +21,14 @@ describe("Button.cy.tsx", () => {
       </>
     );
   });
+
+  it("button loading", () => {
+    const BUTTON_TEXT = "按钮";
+    cy.mount(
+      <Button primary loading>
+        {BUTTON_TEXT}
+      </Button>
+    );
+    cy.findByText(BUTTON_TEXT).children("svg").should("exist");
+  });
 });
