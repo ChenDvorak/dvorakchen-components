@@ -35,3 +35,28 @@ select color, pass primary or secondary or nothing
 <Button secordary>Secondary Button</Button>
 <Button>General Button</Button>
 ```
+
+## Input
+
+```jsx
+import { Input } from "dvorakchen-components";
+
+<Input />;
+```
+
+label prefix
+
+```jsx
+<Input label="TEXT" />
+```
+
+## CheckBox
+
+```jsx
+import { CheckBox } from "dvorakchen-components";
+
+<CheckBox>
+  <CheckBox.Item label="LABEL_1" defaultChecked defaultValue="ON" />
+  <CheckBox.Item label="LABEL_2" defaultValue="OFF" />
+</CheckBox>;
+```
