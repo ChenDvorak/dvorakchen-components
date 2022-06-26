@@ -19,7 +19,7 @@ npm i dvorakchen-components
 ```jsx
 import { Button } from "dvorakchen-components";
 
-<Button>Submit</Button>;
+<Button>Submit</Button>;    
 ```
 
 pass the props to it like primitive button
