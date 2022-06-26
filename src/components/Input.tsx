@@ -1,4 +1,10 @@
-import { ForwardedRef, forwardRef, InputHTMLAttributes } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  InputHTMLAttributes,
+  useMemo,
+  useId,
+} from "react";
 import { getThemeColor } from "~/theme";
 
 type DvorakInputAttribute = {
@@ -9,23 +15,28 @@ const Input = forwardRef(function (
   props: InputHTMLAttributes<HTMLInputElement> & DvorakInputAttribute,
   ref: ForwardedRef<HTMLInputElement>
 ) {
-  let { id, type, label, ...res } = props;
+  let { type, label, ...rest } = props;
   type ??= "text";
 
-  const theme = getThemeColor("primary");
+  const theme = useMemo(() => getThemeColor("primary"), []);
+  const generateId = useId();
+  const currentId = useMemo(
+    () => (props.id ? props.id : generateId),
+    [props.id]
+  );
 
   return (
     <span className="m-1 flex items-center">
       {label && (
         <>
-          <label htmlFor={id}>{label}</label>
+          <label htmlFor={currentId}>{label}</label>
           <span className="mr-1">:</span>
         </>
       )}
       <input
-        id={id}
+        id={label && currentId}
         type={type}
-        {...res}
+        {...rest}
         ref={ref}
         className={`px-2 ${theme.focusRing}
         outline-none border border-gray-300 rounded-full

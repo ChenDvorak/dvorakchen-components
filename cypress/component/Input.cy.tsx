@@ -4,7 +4,7 @@ describe("Input.cy.tsx", () => {
   it("load Input", () => {
     // Arrange
     cy.mount(<Input />);
-    cy.get("input").should("exist");
+    cy.get("input").should("exist").should("not.have.id");
   });
 
   it("input default value", () => {
@@ -35,6 +35,12 @@ describe("Input.cy.tsx", () => {
     const ID = "account";
     cy.mount(<Input label={LABEL} id={ID} placeholder="请输入账号" />);
     cy.findByLabelText(LABEL).should("exist").should("have.id", ID);
+  });
+
+  it("input with label and without id", () => {
+    const LABEL = "账号";
+    cy.mount(<Input label={LABEL} placeholder="默认生成账号" />);
+    cy.get("input").should("have.attr", "id");
   });
 
   it("change input value", async () => {
