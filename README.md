@@ -5,6 +5,16 @@ There are some compenents for React.
 Now support:
 
 - Button
+- Input
+- CheckBox
+
+Not support:
+
+CHANGE THEME!
+
+I was try to make this components with first Utility-First Fundamentals, like Tailwindcss.
+
+At last, that is not good at making components I thought.
 
 # Installation
 
@@ -19,7 +29,7 @@ npm i dvorakchen-components
 ```jsx
 import { Button } from "dvorakchen-components";
 
-<Button>Submit</Button>;    
+<Button>Submit</Button>;
 ```
 
 pass the props to it like primitive button
