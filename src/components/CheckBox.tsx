@@ -11,6 +11,7 @@ import {
   useEffect,
   useCallback,
   useMemo,
+  KeyboardEvent,
 } from "react";
 import { getThemeColor } from "~/theme";
 
@@ -107,14 +108,23 @@ const Item = forwardRef(function (
     setChecked(cur);
   }
 
+  function handleKeydown(event: KeyboardEvent<HTMLSpanElement>) {
+    if (event.code === "Space") {
+      event.preventDefault();
+      handleClick();
+    }
+  }
+
   return (
     <span
       className={`inline-flex relative items-center rounded-xl px-1 py-0.5
       border shadow cursor-pointer ${theme.border} ${theme.color} transition-colors
-      focus:ring focus:ring-offset-1 ${theme.focusRing} space-x-1`}
+      focus:ring focus:ring-offset-1 ${theme.focusRing} space-x-1 outline-none`}
       onClick={handleClick}
       role="option"
       title={label}
+      onKeyDown={handleKeydown}
+      tabIndex={0}
     >
       {label && (
         <>
