@@ -110,7 +110,7 @@ const Item = forwardRef(function (
   return (
     <span
       className={`inline-flex relative items-center rounded-xl px-1 py-0.5
-      border shadow cursor-pointer ${theme.border} ${theme.color}
+      border shadow cursor-pointer ${theme.border} ${theme.color} transition-colors
       focus:ring focus:ring-offset-1 ${theme.focusRing} space-x-1`}
       onClick={handleClick}
       role="option"
