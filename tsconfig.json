@@ -20,7 +20,8 @@
       "~/*": ["./src/"],
       "~/theme": ["./src/theme"],
       "~/types": ["./src/types"],
-      "~/icons": ["./src/icons"]
+      "~/icons": ["./src/icons"],
+      "~/hooks": ["./src/hooks"]
     },
     "types": ["cypress", "@testing-library/cypress"]
   },
