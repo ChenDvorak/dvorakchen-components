@@ -26,6 +26,7 @@ type CheckBoxItemAttributes = {
   label?: string;
   defaultChecked?: boolean;
   defaultValue: string;
+  submitKey?: string;
 };
 
 type ItemValue = {
@@ -35,19 +36,11 @@ type ItemValue = {
 };
 
 type ChangeHandler = (values: ItemValue, emit?: boolean) => void;
+type ContextType = [string | undefined, ChangeHandler | undefined];
 
-const CheckboxContext = createContext<ChangeHandler | undefined>(undefined);
-
-const useCheckBoxContent = (): ChangeHandler => {
-  const ctx = useContext(CheckboxContext);
-  if (!ctx) {
-    throw new Error("checkbox context null");
-  }
-  return ctx;
-};
+const CheckboxContext = createContext<ContextType>([undefined, undefined]);
 
 const CheckBoxRoot = function (props: PropsWithChildren<CheckBoxAttributes>) {
-  const [selectedValues, setSelectedValue] = useState<string[]>([]);
   const checkedValues = useRef<Map<string, string | null>>(new Map());
   const { onChange, name } = props;
 
@@ -58,10 +51,10 @@ const CheckBoxRoot = function (props: PropsWithChildren<CheckBoxAttributes>) {
       } else {
         checkedValues.current.set(value.id, value.value);
       }
-      const values = Array.from(checkedValues.current.values());
-      const sel = values.filter(Boolean) as string[];
-      setSelectedValue(sel);
+
       if (typeof onChange === "function" && emit) {
+        const values = Array.from(checkedValues.current.values());
+        const sel = values.filter(Boolean) as string[];
         onChange(sel);
       }
     },
@@ -69,13 +62,9 @@ const CheckBoxRoot = function (props: PropsWithChildren<CheckBoxAttributes>) {
   );
 
   return (
-    <CheckboxContext.Provider value={handleClick}>
+    <CheckboxContext.Provider value={[props.name, handleClick]}>
       <span className="inline-flex items-center space-x-2" role="listbox">
         {props.children}
-        {props.name &&
-          selectedValues.map((t) => (
-            <input hidden type="text" name={name} value={t} />
-          ))}
       </span>
     </CheckboxContext.Provider>
   );
@@ -89,7 +78,7 @@ const Item = forwardRef(function (
     CheckBoxItemAttributes,
   ref: ForwardedRef<HTMLInputElement>
 ) {
-  const changeHandler = useCheckBoxContent();
+  const [name, changeHandler] = useContext(CheckboxContext);
   let { label, defaultChecked, ...rest } = props;
 
   defaultChecked ??= false;
@@ -107,7 +96,7 @@ const Item = forwardRef(function (
   const [checked, setChecked] = useState(defaultChecked);
 
   useEffect(() => {
-    if (checked) {
+    if (checked && changeHandler) {
       changeHandler({ id: currentId, value: currentValue, checked: true });
     }
   }, []);
@@ -115,9 +104,11 @@ const Item = forwardRef(function (
   const theme = checked ? getThemeColor("primary") : getThemeColor("general");
 
   function handleClick() {
-    const cur = !checked;
-    changeHandler({ id: currentId, value: currentValue, checked: cur }, true);
-    setChecked(cur);
+    if (changeHandler) {
+      const cur = !checked;
+      changeHandler({ id: currentId, value: currentValue, checked: cur }, true);
+      setChecked(cur);
+    }
   }
 
   function handleKeydown(event: KeyboardEvent<HTMLSpanElement>) {
@@ -155,7 +146,9 @@ const Item = forwardRef(function (
         type="checkbox"
         id={currentId}
         checked={checked}
+        name={name}
         {...rest}
+        value={props.submitKey}
       />
     </span>
   );

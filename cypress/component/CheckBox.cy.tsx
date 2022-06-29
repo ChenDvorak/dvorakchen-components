@@ -40,6 +40,7 @@ describe("CheckBox.cy.tsx", () => {
         <CheckBox.Item
           label={EXPECTED_LABEL[0]}
           defaultValue={EXPECTED_VALUES[0]}
+          submitKey="cb1"
         />
         <CheckBox.Item
           label={EXPECTED_LABEL[1]}
