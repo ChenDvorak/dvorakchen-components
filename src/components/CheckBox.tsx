@@ -17,6 +17,7 @@ import { getThemeColor } from "~/theme";
 import { Checkmark } from "~/icons";
 
 type CheckBoxAttributes = {
+  name?: string;
   defaultValues?: string[];
   onChange?: (value: string[]) => void;
 };
@@ -46,8 +47,9 @@ const useCheckBoxContent = (): ChangeHandler => {
 };
 
 const CheckBoxRoot = function (props: PropsWithChildren<CheckBoxAttributes>) {
+  const [selectedValues, setSelectedValue] = useState<string[]>([]);
   const checkedValues = useRef<Map<string, string | null>>(new Map());
-  const { onChange } = props;
+  const { onChange, name } = props;
 
   const handleClick = useCallback(
     function handleClick(value: ItemValue, emit: boolean = false) {
@@ -56,9 +58,11 @@ const CheckBoxRoot = function (props: PropsWithChildren<CheckBoxAttributes>) {
       } else {
         checkedValues.current.set(value.id, value.value);
       }
+      const values = Array.from(checkedValues.current.values());
+      const sel = values.filter(Boolean) as string[];
+      setSelectedValue(sel);
       if (typeof onChange === "function" && emit) {
-        const values = Array.from(checkedValues.current.values());
-        onChange(values.filter(Boolean) as string[]);
+        onChange(sel);
       }
     },
     [onChange]
@@ -68,13 +72,20 @@ const CheckBoxRoot = function (props: PropsWithChildren<CheckBoxAttributes>) {
     <CheckboxContext.Provider value={handleClick}>
       <span className="inline-flex items-center space-x-2" role="listbox">
         {props.children}
+        {props.name &&
+          selectedValues.map((t) => (
+            <input hidden type="text" name={name} value={t} />
+          ))}
       </span>
     </CheckboxContext.Provider>
   );
 };
 
 const Item = forwardRef(function (
-  props: Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "checked"> &
+  props: Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "value" | "checked" | "name"
+  > &
     CheckBoxItemAttributes,
   ref: ForwardedRef<HTMLInputElement>
 ) {
