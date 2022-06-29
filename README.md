@@ -70,3 +70,35 @@ import { CheckBox } from "dvorakchen-components";
   <CheckBox.Item label="LABEL_2" defaultValue="OFF" />
 </CheckBox>;
 ```
+
+## Selector
+
+```jsx
+import { Selector } from "dvorakchen-components";
+
+const DATA = [
+  {
+    key: "1111",
+    value: "先择",
+  },
+  {
+    key: "1122",
+    value: "拜入",
+  },
+];
+const PLACEHOLDER = "未选择";
+<Selector dataSource={DATA} placeholder={PLACEHOLDER} />;
+```
+
+## RadioGroup
+
+```jsx
+import { RadioGroup } from "dvorakchen-components";
+
+const DATA = [
+  { key: "1", value: "确认" },
+  { key: "2", value: "取消" },
+];
+function handleChange(item) {}
+<RadioGroup dataSource={DATA} onChange={handleChange} />;
+```
